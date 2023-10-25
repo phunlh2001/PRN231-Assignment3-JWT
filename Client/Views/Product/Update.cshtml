@@ -1,0 +1,18 @@
+﻿@model Server.Models.Product
+@{
+    ViewData["Title"] = "Update Product";
+}
+
+<h2>Update</h2>
+
+<form asp-action="Update" method="post">
+    <input type="hidden" asp-for="ProductId" />
+    Product Name: <input type="text" class="form-control" asp-for="Name" /> <br />
+    Category: <input type="text" class="form-control" asp-for="Category" /> <br />
+    Price: <input type="number" class="form-control" asp-for="UnitPrice" /> <br />
+    Color: <br /><input type="color" asp-for="Color" /> <br />
+    Stock: <input type="number" class="form-control" asp-for="AvailableQuantity" /> <br />
+
+    <input type="submit" value="Update" class="btn btn-success">
+    <a href="/product" class="btn btn-outline-primary">Back</a>
+</form>

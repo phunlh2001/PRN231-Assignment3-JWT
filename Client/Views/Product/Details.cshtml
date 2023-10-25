@@ -1,0 +1,18 @@
+﻿@model Server.Models.Product
+
+@{
+    ViewData["Title"] = "View Details";
+}
+
+<h2>Product Details</h2>
+
+<dl>
+    <dt>@Model.Name</dt>
+    <dd>Category: @Model.Category</dd>
+    <dd>Price: @Model.UnitPrice</dd>
+    <dd>Color: @Model.Color</dd>
+    <dd>Quantity: @Model.AvailableQuantity</dd>
+    <dt>
+        <a href="/product" class="btn btn-outline-info">Back</a>
+    </dt>
+</dl>

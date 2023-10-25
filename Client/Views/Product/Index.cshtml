@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Server.Models.Product>
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<a href="/product/add" class="btn btn-primary">
+    Create
+</a>
+<hr />
+
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Product Name</th>
+            <th>Category</th>
+            <th>Color</th>
+            <th>Product Price</th>
+            <th>Product Quantity</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.ProductId</td>
+                <td>@item.Name</td>
+                <td>@item.Category</td>
+                <td>@item.Color</td>
+                <td>@item.UnitPrice</td>
+                <td>@item.AvailableQuantity</td>
+                <td>
+                    <a href="/product/detail/@item.ProductId" class="btn btn-outline-info">
+                        View
+                    </a>
+                    <a href="/product/edit/@item.ProductId" class="btn btn-success">
+                        Edit
+                    </a>
+                    <a href="/product/delete/@item.ProductId" class="btn btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

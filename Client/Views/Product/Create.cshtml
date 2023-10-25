@@ -1,0 +1,26 @@
+﻿@model Server.Models.Product
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create" method="post">
+    Product Name: <input type="text" class="form-control" asp-for="Name" />
+    <span class="text-danger" asp-validation-for="Name"></span> <br />
+
+    Category: <input type="text" placeholder="Fruit" class="form-control" asp-for="Category" />
+    <span class="text-danger" asp-validation-for="Category"></span> <br />
+
+    Color: <br /><input type="color" placeholder="#ffffff" asp-for="Color" />
+    <span class="text-danger" asp-validation-for="Color"></span> <br />
+
+    Price: <input type="number" placeholder="USD" class="form-control" asp-for="UnitPrice" />
+    <span class="text-danger" asp-validation-for="UnitPrice"></span> <br />
+
+    Quantity: <input type="number" placeholder="From 1 to 500" class="form-control" asp-for="AvailableQuantity" />
+    <span class="text-danger" asp-validation-for="AvailableQuantity"></span> <br />
+    
+    <input type="submit" value="Create" class="btn btn-success">
+    <a href="/product" class="btn btn-outline-primary">Back</a>
+</form>
