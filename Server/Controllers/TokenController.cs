@@ -37,10 +37,10 @@ namespace Server.Controllers
                         new Claim(JwtRegisteredClaimNames.Sub, _config["Jwt:Subject"]),
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                         new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
-                        new Claim("Id", user.UserId.ToString()),
+                        new Claim("UserId", user.UserId.ToString()),
                         new Claim("FirstName", user.Firstname),
                         new Claim("LastName", user.LastName),
-                        new Claim(ClaimTypes.Name, user.UserName),
+                        new Claim("UserName", user.UserName),
                         new Claim("Email", user.Email),
                     };
 
