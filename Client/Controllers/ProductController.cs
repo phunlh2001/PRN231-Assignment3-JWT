@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,15 +16,16 @@ namespace Client.Controllers
         private readonly HttpClient client;
         private string api;
 
-        public ProductController()
+        public ProductController(IHttpContextAccessor httpContextAccessor)
         {
             client = new HttpClient();
 
-            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            //var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            //client.DefaultRequestHeaders.Accept.Add(contentType);
 
-            client.DefaultRequestHeaders.Accept.Add(contentType);
+            var token = httpContextAccessor.HttpContext.Session.GetString("token");
             client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+                new AuthenticationHeaderValue("Bearer", token);
 
             api = "https://localhost:44322/api/products/";
         }
@@ -32,8 +34,16 @@ namespace Client.Controllers
         {
             if (!IsLogin()) return Redirect("/auth/login");
 
-            var p = await client.GetApi<IEnumerable<Product>>(api);
-            return View(p);
+            try
+            {
+                var p = await client.GetApi<IEnumerable<Product>>(api);
+                return View(p);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return View();
+            }
         }
 
         [HttpGet("detail/{id}", Name = "detail")]
