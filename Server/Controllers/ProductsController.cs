@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Models;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Server.Controllers
 {
     [Route("api/products")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly jwtContext _context;

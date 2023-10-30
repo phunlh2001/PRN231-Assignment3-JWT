@@ -18,13 +18,20 @@ namespace Client.Controllers
         public ProductController()
         {
             client = new HttpClient();
+
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+
             client.DefaultRequestHeaders.Accept.Add(contentType);
+            client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("token"));
+
             api = "https://localhost:44322/api/products/";
         }
 
         public async Task<IActionResult> Index()
         {
+            if (!IsLogin()) return Redirect("/auth/login");
+
             var p = await client.GetApi<IEnumerable<Product>>(api);
             return View(p);
         }
@@ -32,6 +39,8 @@ namespace Client.Controllers
         [HttpGet("detail/{id}", Name = "detail")]
         public async Task<IActionResult> Details(int id)
         {
+            if (!IsLogin()) return Redirect("/auth/login");
+
             var obj = await client.GetApi<Product>(api + id);
             return View(obj);
         }
@@ -45,6 +54,7 @@ namespace Client.Controllers
         }
 
         [HttpPost("add")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
             if (ModelState.IsValid)
@@ -68,6 +78,7 @@ namespace Client.Controllers
         }
 
         [HttpPost("edit/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(int id, Product product)
         {
             if (ModelState.IsValid)
@@ -91,6 +102,7 @@ namespace Client.Controllers
         }
 
         [HttpPost("delete/{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             HttpResponseMessage res = await client.DeleteAsync(api + id);
@@ -104,7 +116,7 @@ namespace Client.Controllers
 
         private bool IsLogin()
         {
-            return HttpContext.Session.GetString("userName") != null;
+            return HttpContext.Session.GetString("token") != null;
         }
     }
 }

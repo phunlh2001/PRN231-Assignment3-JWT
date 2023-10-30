@@ -28,10 +28,9 @@ namespace Client.Controllers
         [HttpGet("login", Name = "login")]
         public IActionResult Login()
         {
-            if (HttpContext.Session.GetString("userName") != null)
-            {
+            if (HttpContext.Session.GetString("token") != null)
                 return Redirect("/product");
-            }
+
             return View();
         }
 
@@ -50,6 +49,7 @@ namespace Client.Controllers
                     var userInfo = JsonConvert.DeserializeObject<UserInfo>(payloadJson);
                     HttpContext.Session.SetString("userEmail", userInfo.Email);
                     HttpContext.Session.SetString("userName", userInfo.UserName);
+                    HttpContext.Session.SetString("token", data);
                     return Redirect("/product");
                 }
                 else
@@ -65,6 +65,7 @@ namespace Client.Controllers
         {
             HttpContext.Session.Remove("userEmail");
             HttpContext.Session.Remove("userName");
+            HttpContext.Session.Remove("data");
             return Redirect("/product");
         }
     }

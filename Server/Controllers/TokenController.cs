@@ -40,7 +40,7 @@ namespace Server.Controllers
                         new Claim("Id", user.UserId.ToString()),
                         new Claim("FirstName", user.Firstname),
                         new Claim("LastName", user.LastName),
-                        new Claim("UserName", user.UserName),
+                        new Claim(ClaimTypes.Name, user.UserName),
                         new Claim("Email", user.Email),
                     };
 
@@ -48,7 +48,7 @@ namespace Server.Controllers
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                     var token = new JwtSecurityToken(
-                        _config["Jwt:Issuer"],
+                        _config["Jwt:Issuser"],
                         _config["Jwt:Audience"],
                         claims, expires: DateTime.UtcNow.AddDays(1),
                         signingCredentials: signIn);
@@ -68,7 +68,8 @@ namespace Server.Controllers
 
         private async Task<UserInfo> GetUser(string email, string password)
         {
-            return await _context.UserInfos.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+            return await _context.UserInfos.FirstOrDefaultAsync(u =>
+                u.Email == email && u.Password == password);
         }
     }
 }
