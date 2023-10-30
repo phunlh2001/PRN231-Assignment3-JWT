@@ -20,9 +20,6 @@ namespace Client.Controllers
         {
             client = new HttpClient();
 
-            //var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-            //client.DefaultRequestHeaders.Accept.Add(contentType);
-
             var token = httpContextAccessor.HttpContext.Session.GetString("token");
             client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", token);
