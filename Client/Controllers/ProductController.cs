@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Server.Models;
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -31,16 +30,8 @@ namespace Client.Controllers
         {
             if (!IsLogin()) return Redirect("/auth/login");
 
-            try
-            {
-                var p = await client.GetApi<IEnumerable<Product>>(api);
-                return View(p);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return View();
-            }
+            var p = await client.GetApi<IEnumerable<Product>>(api);
+            return View(p);
         }
 
         [HttpGet("detail/{id}", Name = "detail")]

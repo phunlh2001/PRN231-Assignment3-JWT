@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Server.Models;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,8 +19,6 @@ namespace Client.Controllers
         public AuthController()
         {
             client = new HttpClient();
-            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
-            client.DefaultRequestHeaders.Accept.Add(contentType);
             api = "https://localhost:44322/api/token";
         }
 
