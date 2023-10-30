@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Product";
+    var index = 1;
 }
 
 <a href="/product/add" class="btn btn-primary">
@@ -12,7 +13,7 @@
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
-            <th>ID</th>
+            <th>No.</th>
             <th>Product Name</th>
             <th>Category</th>
             <th>Color</th>
@@ -25,7 +26,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@item.ProductId</td>
+                <td>@index</td>
                 <td>@item.Name</td>
                 <td>@item.Category</td>
                 <td>@item.Color</td>
@@ -43,6 +44,7 @@
                     </a>
                 </td>
             </tr>
+            index++;
         }
     </tbody>
 </table>
