@@ -7,11 +7,19 @@
 
 <form asp-action="Update" method="post">
     <input type="hidden" asp-for="ProductId" />
-    Product Name: <input type="text" class="form-control" asp-for="Name" /> <br />
-    Category: <input type="text" class="form-control" asp-for="Category" /> <br />
-    Price: <input type="number" class="form-control" asp-for="UnitPrice" /> <br />
+    Product Name: <input type="text" class="form-control" asp-for="Name" />
+    <span class="text-danger" asp-validation-for="Name"></span> <br />
+
+    Category: <input type="text" class="form-control" asp-for="Category" />
+    <span class="text-danger" asp-validation-for="Category"></span> <br />
+
+    Price: <input type="number" class="form-control" asp-for="UnitPrice" />
+    <span class="text-danger" asp-validation-for="UnitPrice"></span> <br />
+
     Color: <br /><input type="color" asp-for="Color" /> <br />
-    Stock: <input type="number" class="form-control" asp-for="AvailableQuantity" /> <br />
+
+    Stock: <input type="number" class="form-control" asp-for="AvailableQuantity" />
+    <span class="text-danger" asp-validation-for="AvailableQuantity"></span> <br />
 
     <input type="submit" value="Update" class="btn btn-success">
     <a href="/product" class="btn btn-outline-primary">Back</a>
