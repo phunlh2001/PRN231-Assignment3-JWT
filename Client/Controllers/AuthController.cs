@@ -42,14 +42,15 @@ namespace Client.Controllers
                 HttpResponseMessage res = await client.PostApi(info, api);
                 if (res.IsSuccessStatusCode)
                 {
-                    var data = await res.Content.ReadAsStringAsync();
-                    string payload = data.Split(".")[1];
-                    string payloadJson = Encoding.UTF8.GetString(Base64UrlEncoder.DecodeBytes(payload));
+                    var result = await res.Content.ReadAsStringAsync();
+                    string token = result.Trim('"');
 
+                    HttpContext.Session.SetString("token", token);
+                    string payload = token.Split(".")[1];
+                    string payloadJson = Encoding.UTF8.GetString(Base64UrlEncoder.DecodeBytes(payload));
                     var userInfo = JsonConvert.DeserializeObject<UserInfo>(payloadJson);
+
                     HttpContext.Session.SetString("userEmail", userInfo.Email);
-                    HttpContext.Session.SetString("userName", userInfo.UserName);
-                    HttpContext.Session.SetString("token", data);
                     return Redirect("/product");
                 }
                 else
@@ -64,8 +65,7 @@ namespace Client.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("userEmail");
-            HttpContext.Session.Remove("userName");
-            HttpContext.Session.Remove("data");
+            HttpContext.Session.Remove("token");
             return Redirect("/product");
         }
     }
